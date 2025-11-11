@@ -5,6 +5,7 @@ from typing import Dict, Any
 import pandas as pd
 
 from app.services.mistral_client import MistralClient
+from app.schemas.analysis import UXInsightsResponse, UXInsight, ComputedMetrics
 
 
 class DatasetError(Exception):
@@ -201,7 +202,7 @@ async def generate_ux_insights(
     mistral_client: MistralClient,
     df: pd.DataFrame,
     prompt_template: str
-) -> Dict[str, Any]:
+) -> UXInsightsResponse:
     """
     Generate structured UX insights using Mistral AI.
     
@@ -214,17 +215,17 @@ async def generate_ux_insights(
         prompt_template: Template string with {context} placeholder
         
     Returns:
-        Structured insights dictionary with issues, segments, and recommendations
+        Validated UXInsightsResponse with insights and metrics
         
     Raises:
         AnalysisError: If metrics computation or LLM generation fails
     """
     try:
-        metrics = compute_basic_metrics(df)
+        metrics_dict = compute_basic_metrics(df)
     except Exception as e:
         raise AnalysisError(f"Failed to compute metrics: {str(e)}")
     
-    context = build_llm_context(df, metrics)
+    context = build_llm_context(df, metrics_dict)
     
     final_prompt = prompt_template.replace("{context}", context)
     
@@ -238,14 +239,21 @@ async def generate_ux_insights(
         raise AnalysisError(f"Mistral API call failed: {str(e)}")
     
     try:
-        insights = json.loads(raw_response)
-    except json.JSONDecodeError:
-        insights = {
-            "raw_analysis": raw_response,
-            "parsing_note": "LLM returned non-JSON format"
-        }
+        llm_output = json.loads(raw_response)
+    except json.JSONDecodeError as e:
+        raise AnalysisError(f"LLM returned invalid JSON: {str(e)}")
     
-    insights["metrics"] = metrics
-    
-    return insights
+    try:
+        insights_list = [UXInsight(**insight) for insight in llm_output.get("insights", [])]
+        metrics_model = ComputedMetrics(**metrics_dict)
+        
+        response = UXInsightsResponse(
+            summary=llm_output.get("summary", "No summary provided"),
+            insights=insights_list,
+            metrics=metrics_model
+        )
+        
+        return response
+    except Exception as e:
+        raise AnalysisError(f"Failed to validate LLM output structure: {str(e)}")
 
