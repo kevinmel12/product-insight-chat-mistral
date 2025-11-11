@@ -238,10 +238,25 @@ async def generate_ux_insights(
     except Exception as e:
         raise AnalysisError(f"Mistral API call failed: {str(e)}")
     
+    cleaned_response = raw_response.strip()
+    
+    if cleaned_response.startswith("```json"):
+        cleaned_response = cleaned_response[7:]
+    elif cleaned_response.startswith("```"):
+        cleaned_response = cleaned_response[3:]
+    
+    if cleaned_response.endswith("```"):
+        cleaned_response = cleaned_response[:-3]
+    
+    cleaned_response = cleaned_response.strip()
+    
     try:
-        llm_output = json.loads(raw_response)
+        llm_output = json.loads(cleaned_response)
     except json.JSONDecodeError as e:
-        raise AnalysisError(f"LLM returned invalid JSON: {str(e)}")
+        raise AnalysisError(
+            f"LLM returned invalid JSON: {str(e)}. "
+            f"First 200 chars of response: {raw_response[:200]}"
+        )
     
     try:
         insights_list = [UXInsight(**insight) for insight in llm_output.get("insights", [])]
