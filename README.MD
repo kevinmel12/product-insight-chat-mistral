@@ -109,7 +109,7 @@ Create a `.env` file at the project root (or inside `backend/` depending on your
 
 ```bash
 MISTRAL_API_KEY=your_api_key_here
-MISTRAL_MODEL_ID=mistral-medium-3.1
+MISTRAL_MODEL_ID=open-mixtral-8x7b
 ```
 
 Do **not** commit your real API key.
@@ -163,7 +163,7 @@ The backend uses a dedicated `mistral_client.py` service to:
 * Encapsulate prompts for UX analysis and conversational Q&A.
 * Keep secrets and configuration on the server side.
 
-PS : This project is configured by default with mistral-medium-3.1.
+PS : This project is configured by default with open-mixtral-8x7b.
 Any compatible chat model from Mistral can be used by changing MISTRAL_MODEL_ID in your environment.
 
 ## Note
