@@ -167,6 +167,5 @@ PS : This project is configured by default with mistral-medium-3.1.
 Any compatible chat model from Mistral can be used by changing MISTRAL_MODEL_ID in your environment.
 
 ## Note
-
 This README describes the intended structure and features of the project before implementation.  
 Some parts (setup, routes, and datasets) will be progressively added and validated as development advances.
