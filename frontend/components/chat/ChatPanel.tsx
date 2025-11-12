@@ -92,7 +92,7 @@ export function ChatPanel({
   );
 
   return (
-    <Card className="flex h-full flex-col overflow-hidden">
+    <Card className="flex h-full w-full flex-col overflow-hidden">
       <CardHeader className="border-b">
         <div className="flex items-center gap-2">
           <ChatIcon className="h-5 w-5 text-muted-foreground" />

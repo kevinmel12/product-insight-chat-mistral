@@ -42,8 +42,9 @@ export default function HomePage() {
 
   return (
     <DashboardShell>
-      <div className="flex h-full gap-6">
-        <div className="flex flex-1 flex-col overflow-auto">
+      <div className="flex h-[calc(100vh-6rem)] w-full gap-6">
+        <div className="flex min-w-0 flex-[1.7] flex-col overflow-hidden">
+          <div className="flex-1 space-y-6 overflow-auto pr-3">
           {isInitial ? (
             <RunAnalysisHero onRun={runAnalysis} loading={isLoading} error={error} />
           ) : isLoading ? (
@@ -56,8 +57,9 @@ export default function HomePage() {
           ) : (
             <RunAnalysisHero onRun={runAnalysis} loading={isLoading} error={error} />
           )}
+          </div>
         </div>
-        <div className="hidden h-[calc(100vh-7rem)] w-full max-w-md flex-shrink-0 lg:block">
+        <div className="hidden h-[calc(100vh-6rem)] min-w-[380px] flex-1 lg:flex">
           <ChatPanel
             enabled={hasData}
             lockedMessage="Run an analysis to unlock the assistant."
