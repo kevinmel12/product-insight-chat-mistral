@@ -21,40 +21,44 @@ export function InsightCard({ insight, index }: InsightCardProps) {
   const styles = severityStyles[insight.severity];
 
   return (
-    <Card className="flex h-full flex-col border-none bg-card/80 shadow-lg backdrop-blur transition hover:-translate-y-1 hover:shadow-xl">
-      <CardHeader className="gap-3 pb-4">
+    <Card className="flex h-full flex-col transition-shadow hover:shadow-md">
+      <CardHeader className="space-y-3 pb-4">
         <div className="flex items-center justify-between">
           <Badge className={styles.badge}>{styles.label}</Badge>
           {typeof index === "number" ? (
-            <span className="text-sm font-medium text-muted-foreground">
+            <span className="text-xs font-medium text-muted-foreground">
               #{index + 1}
             </span>
           ) : null}
         </div>
-        <CardTitle className="text-xl font-semibold leading-tight">
+        <CardTitle className="text-lg font-semibold leading-tight">
           {insight.title}
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-1 flex-col gap-4 text-sm text-muted-foreground">
-        <div>
-          <span className="font-semibold text-foreground">Evidence:</span>{" "}
-          {insight.metric_evidence}
+      <CardContent className="flex flex-1 flex-col gap-4 text-sm">
+        <div className="space-y-1">
+          <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            Evidence
+          </div>
+          <p className="text-foreground">{insight.metric_evidence}</p>
         </div>
-        <div>
-          <span className="font-semibold text-foreground">Hypothesis:</span>{" "}
-          {insight.hypothesized_cause}
+        <div className="space-y-1">
+          <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            Hypothesis
+          </div>
+          <p className="text-foreground">{insight.hypothesized_cause}</p>
         </div>
-        <div className="rounded-2xl bg-muted/60 p-4 text-foreground">
-          <div className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+        <div className="rounded-lg border bg-muted/30 p-4">
+          <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             Recommendation
           </div>
-          <p className="mt-1 text-base leading-relaxed">
+          <p className="mt-2 text-sm leading-relaxed text-foreground">
             {insight.recommendation}
           </p>
         </div>
-        <div className="mt-auto text-xs uppercase tracking-wide text-muted-foreground">
-          Target segment:{" "}
-          <span className="font-semibold text-foreground">
+        <div className="mt-auto border-t pt-3 text-xs text-muted-foreground">
+          Target:{" "}
+          <span className="font-medium text-foreground">
             {insight.target_segment}
           </span>
         </div>

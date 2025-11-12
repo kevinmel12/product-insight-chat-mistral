@@ -42,23 +42,22 @@ export default function HomePage() {
 
   return (
     <DashboardShell>
-      <div className="grid gap-10 lg:grid-cols-[1fr] xl:grid-cols-[7fr_5fr]">
-        <div className="flex flex-col gap-10">
+      <div className="flex h-full gap-6">
+        <div className="flex flex-1 flex-col overflow-auto">
           {isInitial ? (
             <RunAnalysisHero onRun={runAnalysis} loading={isLoading} error={error} />
           ) : isLoading ? (
             <AnalysisSkeleton />
           ) : hasData && data ? (
-            <section className="flex flex-col gap-8">
+            <div className="flex flex-col gap-6">
               <InsightsSummary summary={data.summary} />
-              <Separator className="hidden lg:block" />
               <InsightsGrid insights={data.insights} />
-            </section>
+            </div>
           ) : (
             <RunAnalysisHero onRun={runAnalysis} loading={isLoading} error={error} />
           )}
         </div>
-        <div className="flex">
+        <div className="hidden h-[calc(100vh-7rem)] w-[420px] flex-shrink-0 lg:block">
           <ChatPanel
             enabled={hasData}
             lockedMessage="Run an analysis to unlock the assistant."
@@ -72,13 +71,22 @@ export default function HomePage() {
 
 function AnalysisSkeleton() {
   return (
-    <section className="flex flex-col gap-8">
-      <Skeleton className="h-48 w-full rounded-3xl" />
-      <div className="grid gap-6 md:grid-cols-2">
+    <div className="flex flex-col items-center justify-center gap-6 py-20">
+      <div className="relative">
+        <div className="h-16 w-16 animate-spin rounded-full border-4 border-muted border-t-primary" />
+        <div className="absolute inset-0 h-16 w-16 animate-pulse rounded-full border-4 border-primary/20" />
+      </div>
+      <div className="flex flex-col items-center gap-2 text-center">
+        <h3 className="text-lg font-semibold">Analyzing your data...</h3>
+        <p className="text-sm text-muted-foreground">
+          Processing 12,330 sessions and generating UX insights
+        </p>
+      </div>
+      <div className="mt-8 grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: 6 }).map((_, index) => (
-          <Skeleton key={index} className="h-48 w-full rounded-3xl" />
+          <Skeleton key={index} className="h-64 w-full rounded-lg opacity-50" />
         ))}
       </div>
-    </section>
+    </div>
   );
 }

@@ -6,17 +6,17 @@ interface InsightsSummaryProps {
 
 export function InsightsSummary({ summary }: InsightsSummaryProps) {
   return (
-    <Card className="border-none bg-card/70 shadow-lg backdrop-blur-lg">
-      <CardHeader className="gap-2">
-        <CardTitle className="text-lg font-semibold text-foreground">
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base font-semibold">
           Executive Summary
         </CardTitle>
         <p className="text-sm text-muted-foreground">
-          Key themes extracted from the conversion dataset snapshot.
+          Key themes extracted from 12,330 e-commerce sessions
         </p>
       </CardHeader>
       <CardContent>
-        <p className="text-base leading-relaxed text-muted-foreground">
+        <p className="text-sm leading-relaxed text-foreground">
           {summary}
         </p>
       </CardContent>

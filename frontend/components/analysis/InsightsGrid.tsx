@@ -9,14 +9,14 @@ interface InsightsGridProps {
 export function InsightsGrid({ insights }: InsightsGridProps) {
   if (!insights.length) {
     return (
-      <div className="rounded-3xl border border-dashed border-muted-foreground/30 p-10 text-center text-sm text-muted-foreground">
+      <div className="rounded-lg border border-dashed p-12 text-center text-sm text-muted-foreground">
         Insights will appear here once the analysis completes.
       </div>
     );
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-2">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {insights.map((insight, index) => (
         <InsightCard insight={insight} index={index} key={insight.id} />
       ))}

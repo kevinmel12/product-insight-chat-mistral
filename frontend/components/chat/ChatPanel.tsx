@@ -92,24 +92,21 @@ export function ChatPanel({
   );
 
   return (
-    <Card className="flex h-full min-h-[680px] flex-col overflow-hidden border-none bg-card/80 shadow-xl backdrop-blur">
-      <CardHeader className="space-y-2">
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <ChatIcon className="h-4 w-4" />
-          <span className="text-sm uppercase tracking-wide">AI Assistant</span>
+    <Card className="flex h-full flex-col overflow-hidden">
+      <CardHeader className="border-b">
+        <div className="flex items-center gap-2">
+          <ChatIcon className="h-5 w-5 text-muted-foreground" />
+          <CardTitle className="text-base font-semibold">
+            AI Assistant
+          </CardTitle>
         </div>
-        <CardTitle className="text-2xl font-semibold text-foreground">
-          Conversation
-        </CardTitle>
-        <p className="text-sm text-muted-foreground">
-          The assistant references the latest UX insights to guide your next
-          move.
+        <p className="text-xs text-muted-foreground">
+          Ask questions about insights and UX patterns
         </p>
       </CardHeader>
-      <Separator />
-      <CardContent className="flex flex-1 flex-col gap-4 p-0">
-        <ScrollArea className="flex-1 px-6">
-          <div className="relative flex h-full flex-col gap-4 py-6">
+      <CardContent className="flex flex-1 flex-col p-0">
+        <ScrollArea className="flex-1 p-4">
+          <div className="flex min-h-full flex-col gap-3">
             {messages.length === 0 ? (
               <Placeholder enabled={enabled} />
             ) : (
@@ -120,38 +117,38 @@ export function ChatPanel({
             <div ref={bottomRef} />
           </div>
         </ScrollArea>
-        <Separator />
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-3 px-6 pb-6 pt-2"
-        >
-          <div className="flex items-center gap-3">
-            <Input
-              value={question}
-              onChange={(event) => setQuestion(event.target.value)}
-              placeholder={
-                enabled
-                  ? "Ask about conversion, UX friction, segments..."
-                  : "Run analysis first..."
-              }
-              disabled={!enabled || isSending}
-            />
-            <Button
-              type="submit"
-              disabled={!canSend}
-              className="h-11 w-14 rounded-2xl px-0 shadow-lg"
-            >
-              {isSending ? (
-                <span className="h-5 w-5 animate-spin rounded-full border-2 border-background border-t-transparent" />
-              ) : (
-                <SendIcon className="h-5 w-5" />
-              )}
-            </Button>
-          </div>
-          {error ? (
-            <p className="text-sm text-destructive">{error}</p>
-          ) : null}
-        </form>
+        <div className="border-t p-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+            <div className="flex gap-2">
+              <Input
+                value={question}
+                onChange={(event) => setQuestion(event.target.value)}
+                placeholder={
+                  enabled
+                    ? "Ask about conversion, segments..."
+                    : "Run analysis first..."
+                }
+                disabled={!enabled || isSending}
+                className="flex-1"
+              />
+              <Button
+                type="submit"
+                disabled={!canSend}
+                size="icon"
+                className="h-10 w-10 shrink-0"
+              >
+                {isSending ? (
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-background border-t-transparent" />
+                ) : (
+                  <SendIcon className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+            {error ? (
+              <p className="text-xs text-destructive">{error}</p>
+            ) : null}
+          </form>
+        </div>
       </CardContent>
     </Card>
   );
@@ -170,14 +167,12 @@ function Placeholder({ enabled }: { enabled: boolean }) {
 function MessageBubble({ message }: { message: Message }) {
   const isUser = message.role === "user";
   return (
-    <div
-      className={`flex ${isUser ? "justify-end" : "justify-start"} w-full`}
-    >
+    <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
       <div
-        className={`max-w-[75%] rounded-3xl px-5 py-4 text-sm leading-relaxed shadow-sm transition ${
+        className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed ${
           isUser
             ? "bg-primary text-primary-foreground"
-            : "bg-background text-muted-foreground ring-1 ring-border"
+            : "border bg-muted/50 text-foreground"
         }`}
       >
         {message.content}
