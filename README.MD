@@ -1,6 +1,6 @@
-# InsightChat – Mistral-powered UX Analytics Assistant
+# ProductInsightChat – Mistral-powered UX Analytics Assistant
 
-InsightChat is a full-stack demo application built with Mistral AI models.
+ProductInsightChat is a full-stack demo application built with Mistral AI models.
 
 It ingests user behavior datasets (e.g. clickstream, sessions, conversions), generates UX insights, and lets users **chat with an AI** to explore issues, hypotheses, and recommended UI/UX improvements.
 
@@ -87,9 +87,35 @@ insightchat-mistral/
 │  ├─ package.json
 │  ├─ next.config.mjs
 │  ├─ tsconfig.json
-│  └─ app/
-│     ├─ layout.tsx
-│     └─ page.tsx
+│  ├─ tailwind.config.ts
+│  ├─ postcss.config.js
+│  ├─ app/
+│  │  ├─ layout.tsx
+│  │  ├─ page.tsx
+│  │  └─ globals.css
+│  ├─ components/
+│  │  ├─ analysis/
+│  │  │  ├─ InsightsGrid.tsx
+│  │  │  ├─ InsightsSummary.tsx
+│  │  │  └─ RunAnalysisHero.tsx
+│  │  ├─ chat/
+│  │  │  └─ ChatPanel.tsx
+│  │  ├─ insights/
+│  │  │  └─ InsightCard.tsx
+│  │  ├─ layout/
+│  │  │  └─ DashboardShell.tsx
+│  │  └─ ui/
+│  │     ├─ button.tsx
+│  │     ├─ card.tsx
+│  │     ├─ input.tsx
+│  │     ├─ badge.tsx
+│  │     ├─ separator.tsx
+│  │     ├─ skeleton.tsx
+│  │     └─ scroll-area.tsx
+│  └─ lib/
+│     ├─ api-client.ts
+│     ├─ types.ts
+│     └─ utils.ts
 │
 ├─ prompts/
 │  ├─ ux_analysis_prompt.md
