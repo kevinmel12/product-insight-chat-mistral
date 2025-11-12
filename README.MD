@@ -105,14 +105,17 @@ insightchat-mistral/
 
 ### 1. Environment variables
 
-Create a `.env` file at the project root (or inside `backend/` depending on your setup):
+Create a `.env` file at the project root:
 
 ```bash
 MISTRAL_API_KEY=your_api_key_here
 MISTRAL_MODEL_ID=open-mixtral-8x7b
 ```
 
-Do **not** commit your real API key.
+**Note:**
+- Do **not** commit your real API key.
+- You can change the Mistral model by updating `MISTRAL_MODEL_ID` (e.g., `mistral-small-latest`, `mistral-large-latest`).
+- The default dataset is `datasets/online_shoppers_intention.csv` (12,330 e-commerce sessions). You can replace it with your own CSV in the `datasets/` folder and update the path in `backend/app/api/v1/routes_analyze.py`.
 
 ### 2. Backend
 
@@ -163,9 +166,10 @@ The backend uses a dedicated `mistral_client.py` service to:
 * Encapsulate prompts for UX analysis and conversational Q&A.
 * Keep secrets and configuration on the server side.
 
-PS : This project is configured by default with open-mixtral-8x7b.
-Any compatible chat model from Mistral can be used by changing MISTRAL_MODEL_ID in your environment.
+**Default Configuration:**
+- Model: `open-mixtral-8x7b` (free tier)
+- Dataset: `datasets/online_shoppers_intention.csv` (Kaggle e-commerce dataset, 12,330 sessions)
 
-## Note
-This README describes the intended structure and features of the project before implementation.  
-Some parts (setup, routes, and datasets) will be progressively added and validated as development advances.
+Any compatible chat model from Mistral can be used by changing `MISTRAL_MODEL_ID` in your `.env` file.
+
+

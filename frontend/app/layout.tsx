@@ -15,7 +15,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "InsightChat – UX Intelligence Assistant",
+  title: "ProductInsightChat – UX Intelligence Assistant",
   description:
     "Analyze conversion data instantly and collaborate with an AI analyst to uncover UX opportunities.",
 };
