@@ -5,8 +5,21 @@ const API_BASE =
 
 async function handleResponse<T>(res: Response, defaultMessage: string) {
   if (!res.ok) {
-    const msg = await res.text().catch(() => "");
-    throw new Error(msg || defaultMessage);
+    let errorMessage = defaultMessage;
+    try {
+      const errorData = await res.json();
+      if (errorData.detail) {
+        if (errorData.detail.includes("429") || errorData.detail.includes("capacity exceeded")) {
+          errorMessage = "Mistral API rate limit reached. Please try again in a few moments.";
+        } else {
+          errorMessage = errorData.detail;
+        }
+      }
+    } catch {
+      const text = await res.text().catch(() => "");
+      if (text) errorMessage = text;
+    }
+    throw new Error(errorMessage);
   }
   return (await res.json()) as T;
 }

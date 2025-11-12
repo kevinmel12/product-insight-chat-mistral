@@ -57,7 +57,7 @@ export default function HomePage() {
             <RunAnalysisHero onRun={runAnalysis} loading={isLoading} error={error} />
           )}
         </div>
-        <div className="hidden h-[calc(100vh-7rem)] w-[420px] flex-shrink-0 lg:block">
+        <div className="hidden h-[calc(100vh-7rem)] w-full max-w-md flex-shrink-0 lg:block">
           <ChatPanel
             enabled={hasData}
             lockedMessage="Run an analysis to unlock the assistant."
